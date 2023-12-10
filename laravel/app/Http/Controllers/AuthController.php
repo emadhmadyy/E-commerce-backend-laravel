@@ -43,10 +43,6 @@ class AuthController extends Controller
     }
 
     public function register(Request $request){
-        // $request->validate([
-        //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => 'required|string|min:6',
-        // ]);
         if($request->usertype_id == '1'){
             $user = User::create([
                 'email' => $request->email,
