@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ShoppingCardsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,8 @@ Route::post('/insert-product', [ProductsController::class, 'insertProduct']);
 Route::get('/get-products', [ProductsController::class, 'getAllSellerProducts']);
 Route::post('/update-product', [ProductsController::class, 'updateProduct']);
 Route::post('/delete-product', [ProductsController::class, 'deleteProduct']);
+
+Route::post('/add-to-cart', [ShoppingCardsController::class, 'addToCart']);
 
 Route::group([
 

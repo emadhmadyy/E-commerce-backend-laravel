@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Shopping_cart;
 
 class AuthController extends Controller
 {
@@ -43,7 +44,7 @@ class AuthController extends Controller
     }
 
     public function register(Request $request){
-        if($request->usertype_id == '1'){
+        if($request->usertype_id == 1){
             $user = User::create([
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
@@ -53,7 +54,7 @@ class AuthController extends Controller
                 'business_address'=>$request->business_address,
             ]);
         }
-        else if($request->usertype_id == '2'){
+        else if($request->usertype_id == 2){
             $user = User::create([
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
@@ -63,10 +64,23 @@ class AuthController extends Controller
                 'phone_number'=>$request->phone_number,
                 'address'=>$request->address,
             ]);
+           
 
         }
 
         $token = Auth::login($user);
+        if($user->usertype_id == 2){
+            try{
+                $shoppingCart = Shopping_cart::create([
+                    'user_id' => $user->id
+                ]);
+            }catch(\Exception $e){
+                return response()->json([
+                    'message' => ''.$e
+                ]);
+            }
+           
+        }
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
